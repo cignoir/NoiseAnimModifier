@@ -9,6 +9,7 @@
 
 import math
 
+
 class Easing:
     NO_EASING = 'No Easing'
     SINE = 'Sine'

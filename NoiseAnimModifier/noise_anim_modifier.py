@@ -10,13 +10,11 @@
 import random
 import maya.cmds as cmds
 from .easing import Easing
+from .operator_type import OperatorType
+from .sign_type import SignType
 
 
 class NoiseAnimModifier:
-    @classmethod
-    def get_all_easing_types(cls):
-        return Easing.all_types()
-
     def get_selected_attribute_keys(self, step, start_frame, end_frame, strength):
         selected_objects = cmds.ls(selection=True)
 
@@ -52,8 +50,10 @@ class NoiseAnimModifier:
     def get_easing_function(self, mode, ease_in, ease_out):
         return Easing.func(mode, ease_in, ease_out)
 
-    def generate_random_values(self, keys_info, keyframes, strength, start_frame, end_frame, easing_function):
+    def generate_random_values(self, keys_info, keyframes, strength, start_frame, end_frame, easing_function,
+                               sign_type: SignType):
         random_values = {}
+        print(sign_type)
         for obj_attr in keys_info:
             random_values[obj_attr] = {}
             for frame in keys_info[obj_attr]:
@@ -62,16 +62,28 @@ class NoiseAnimModifier:
                     prev = (frame - 1 - start_frame) / (end_frame - start_frame)
                     easing_value = easing_function(x) - easing_function(prev)
                     # print(f"{easing_value} = {easing_function(x)} - {easing_function(prev)}")
-                    random_min = -strength * easing_value
-                    random_max = strength * easing_value
+                    if sign_type == SignType.Plus:
+                        random_min = 0
+                        random_max = 2 * strength * easing_value
+                    elif sign_type == SignType.Minus:
+                        random_min = -2 * strength * easing_value
+                        random_max = 0
+                    else:
+                        random_min = -strength * easing_value
+                        random_max = strength * easing_value
+
                     random_values[obj_attr][frame] = random.uniform(random_min, random_max)
         return random_values
 
-    def add_values_to_keys_info(self, keys_info, random_values):
+    def add_values_to_keys_info(self, keys_info, random_values, operator_type: OperatorType):
         for obj_attr in keys_info:
             for frame in keys_info[obj_attr]:
                 if frame in random_values[obj_attr]:
-                    keys_info[obj_attr][frame] += random_values[obj_attr][frame]
+                    if operator_type == OperatorType.Multiplication:
+                        keys_info[obj_attr][frame] *= random_values[obj_attr][frame]
+                    else:
+                        keys_info[obj_attr][frame] += random_values[obj_attr][frame]
+
         return keys_info
 
     def set_keys_from_info(self, keys_info, start_frame, end_frame):
