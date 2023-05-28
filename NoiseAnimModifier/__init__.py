@@ -14,7 +14,7 @@ import maya.OpenMayaUI as omui
 
 import maya.cmds as cmds
 
-from .anim_modifier import AnimModifier
+from .noise_anim_modifier import NoiseAnimModifier
 
 
 def maya_main_window():
@@ -37,7 +37,7 @@ class MainDialog(QtWidgets.QDialog):
         self.modifier_combobox.addItems(["Random"])
 
         self.easing_combobox = QtWidgets.QComboBox()
-        self.easing_combobox.addItems(AnimModifier.get_all_easing_types())
+        self.easing_combobox.addItems(NoiseAnimModifier.get_all_easing_types())
         self.easing_checkbox_in = QtWidgets.QCheckBox("In")
         self.easing_checkbox_out = QtWidgets.QCheckBox("Out")
 
@@ -121,7 +121,7 @@ class MainDialog(QtWidgets.QDialog):
         is_ease_out = self.easing_checkbox_out.isChecked()
         is_motion_trail = self.motion_trail_checkbox.isChecked()
 
-        modifier = AnimModifier()
+        modifier = NoiseAnimModifier()
 
         keys_info, keyframes = modifier.get_selected_attribute_keys(step, start_frame, end_frame, strength)
         easing_func = modifier.get_easing_function(easing_mode, is_ease_in, is_ease_out)
