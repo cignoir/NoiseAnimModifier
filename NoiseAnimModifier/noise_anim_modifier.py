@@ -57,15 +57,14 @@ class NoiseAnimModifier:
         for obj_attr in keys_info:
             random_values[obj_attr] = {}
             for frame in keys_info[obj_attr]:
-                if True or frame not in keyframes:  # Only add random to non-keyframe frames
-                    if start_frame < frame < end_frame:  # Only add random between the specified frames
-                        x = (frame - start_frame) / (end_frame - start_frame)
-                        prev = (frame - 1 - start_frame) / (end_frame - start_frame)
-                        easing_value = easing_function(x) - easing_function(prev)
-                        # print(f"{easing_value} = {easing_function(x)} - {easing_function(prev)}")
-                        random_min = -strength * easing_value
-                        random_max = strength * easing_value
-                        random_values[obj_attr][frame] = random.uniform(random_min, random_max)
+                if start_frame < frame < end_frame:  # Only add random between the specified frames
+                    x = (frame - start_frame) / (end_frame - start_frame)
+                    prev = (frame - 1 - start_frame) / (end_frame - start_frame)
+                    easing_value = easing_function(x) - easing_function(prev)
+                    # print(f"{easing_value} = {easing_function(x)} - {easing_function(prev)}")
+                    random_min = -strength * easing_value
+                    random_max = strength * easing_value
+                    random_values[obj_attr][frame] = random.uniform(random_min, random_max)
         return random_values
 
     def add_values_to_keys_info(self, keys_info, random_values):
