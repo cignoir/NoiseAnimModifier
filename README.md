@@ -1,8 +1,10 @@
 Python Script for Adding Noise to Animations in Maya
 ---
-![image](https://github.com/cignoir/NoiseAnimModifier/assets/247498/aecf209e-3049-4e34-b712-77f4a99eacbd)
+![image](https://github.com/cignoir/NoiseAnimModifier/assets/247498/dbfebe82-3fda-4de9-b295-3d7de2445c58)
 
 This is a simple Python script for Maya that allows you to add noise to animations. One notable feature is the ability to apply an easing function to random noise.
+
+![image](https://github.com/cignoir/NoiseAnimModifier/assets/247498/c3328e11-c9d5-48aa-9845-02e35efd7f06)
 
 ## Installation
 1. Download the scripts from this repository. https://github.com/cignoir/NoiseAnimModifier/releases
