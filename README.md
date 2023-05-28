@@ -9,7 +9,7 @@ This is a simple Python script for Maya that allows you to add noise to animatio
 ## Installation
 1. Download the scripts from this repository. https://github.com/cignoir/NoiseAnimModifier/releases
 2. Copy the `NoiseAnimModifier` folder to Maya's script directory such as `C:\Users\<name>\Documents\maya\scripts`.
-3. Register the following code in the shelf: `from NoiseAnimModifier import *; main_dialog = MainDialog(); main_dialog.show()`
+3. Register the following code in the shelf: `from NoiseAnimModifier import *;MainDialog().show()`
 
 ## Usage
 1. Select an object.
